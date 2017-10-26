@@ -142,7 +142,7 @@ textarea { height: auto; min-height: 120px; border: #eee 1px solid; border-radiu
 
 .manager-left { width: 213px; height: 100%; background-color: #222d32; position: absolute; left: 0; top: 0; background-color: #ffffff; box-shadow: 1px 0 5px 0 #999; font-size: 15px; }
 
-.manager-right { width: 100%; height: 100%; background: #000;}
+.manager-right { width: 100%; height: 100%;}
 
 .manager-top .btn-menu { width: 32px; height: 32px; display: block; background: url("../images/btn-menu.png") center center no-repeat; float: left; margin: 12px; }
 .manager-top .title { font-size: 32px; line-height: 32px; color: #fff; margin-top: 10px; float: left; }

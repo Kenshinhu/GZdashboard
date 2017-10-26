@@ -114,7 +114,7 @@
           </div>
 
           <div id="mapNode">
-            <img src="./js/map_node.svg" alt="">
+            <img id="mapNodeImg" src="./js/map_node.svg" alt="">
           </div>
         </div>
 
@@ -141,7 +141,7 @@
       background-image: url(/images/bg.png);
       background-size: 100%;
 
-      background-color: #000;
+      /* background-color: #000; */
     }
 
     #mapNode {
@@ -156,7 +156,7 @@
       opacity: 0.0;
       left: 222px;
       top: 62px;
-      position: relative;
+      position: absolute;
     }
 
 
@@ -172,6 +172,30 @@
       position: absolute;
       top: 193px;
       left: 292px;
+    }
+
+    .group1Path {
+      position: absolute;
+      left: 244px;
+      top: 40px
+    }
+
+    .group2Path {
+      position: absolute;
+      top: 141px;
+      left: 360px;
+    }
+
+    .group3Path {
+      position: absolute;
+      top: -37px;
+      left: 280px;
+    }
+
+    .group4Path {
+      position: absolute;
+      top: 37px;
+      left: 380px;
     }
 
 
@@ -190,22 +214,79 @@
 
   </style>
   <script>
+    //
+    const hideSmallMapPart = () => {
+      $('.smallMapPart').fadeOut(() => {
+        $('.smallMapPart').remove();
+        $('.mapBox').animate(mapLocation.init);
+        $('#mapNodeImg').fadeIn();
+      })
+    }
+
+    // 显示联组
+    const showSmallMapPart = (key) => (displayGroup(key));
+
+    //
+
+    const mapNodeImgClickHandler = (e) => {
+      const {
+        offsetX,
+        offsetY
+      } = e;
+      $('#mapNodeImg').fadeOut();
+      if (offsetX <= 500 && offsetY <= 300) {
+        showSmallMapPart('group1');
+      } else if (offsetX >= 500 && offsetY <= 300){
+        showSmallMapPart('group4');
+      }else if (offsetX <= 500 && offsetY > 300) {
+        showSmallMapPart('group2');
+      } else if (offsetX >= 500 && offsetY > 300){
+        showSmallMapPart('group3');
+      }
+      // console.log(offsetX);
+      // console.log(offsetY);
+      // console.log('mapNodeImgClickHandler');
+      //
+      // showSmallMapPart();
+    }
+
+    $('#mapNodeImg').click(mapNodeImgClickHandler);
+    $('.mapBox').click(hideSmallMapPart);
+
     const showMapNode = (e) => {
       $('#mapPath').fadeOut();
       $('#localMark').fadeOut();
+
+
+
       $('#mapNode').fadeIn((e) => {
-        $('#mapNode img').animate({
+
+        console.log('mapNode is fadeIn');
+        $('#mapNodeImg').animate({
           opacity: 1.0,
           left: '222px',
         });
 
-        $('#mapNode').click(() => {
-          $('#mapNode img').fadeOut(() => {
-            // $('.mapBox').animate({
-            //   backgroundSize:'150%'
-            // })
-          });
-        })
+
+        // $('#mapNode').click(() => {
+
+        //   $('#mapNode img').fadeOut(() => {
+        //     // // 点击区域
+        //     // $('.mapBox').click(() => {
+        //     //   if ($('.mapBox').css('backgroundSize') === '150%') {
+        //     //     $('.smallMapPart').fadeOut(() => {
+        //     //       $('.smallMapPart').remove();
+        //     //       $('.mapBox').animate(mapLocation.init);
+        //     //     })
+        //     //   } else {
+        //     //     const key = 'group4';
+        //     //     displayGroup(key);
+        //     //   }
+        //     // })
+        //   });
+        //   console.log('mapNode is clock');
+
+        // })
       });
     }
 
@@ -216,46 +297,68 @@
         backgroundPositionX: '0px',
         backgroundPositionY: '0px'
       },
+      group1: {
+        backgroundSize: '150%',
+        backgroundPositionX: '-130px',
+        backgroundPositionY: '-12px'
+      },
+      group2: {
+        backgroundSize: '150%',
+        backgroundPositionX: '-230px',
+        backgroundPositionY: '-202px'
+      },
       group3: {
         backgroundSize: '150%',
         backgroundPositionX: '-630px',
         backgroundPositionY: '-402px'
-      }
+      },
+      group4: {
+        backgroundSize: '150%',
+        backgroundPositionX: '-530px',
+        backgroundPositionY: '-202px'
+      },
+
     }
+
+    const displayGroup = (key) => {
+      console.log('displayGroup');
+      $('.mapBox').animate(mapLocation[key], 1000, () => {
+        console.log('smallMapPart is add');
+        const img = $('<img />');
+        img.addClass('smallMapPart');
+        img.addClass(`${key}Path`)
+        img.attr('src', `./js/${key}.svg`);
+        img.click(()=>{
+          // console.log('click');
+          location.href='./list.html';
+        });
+        $('.mapBox').append(img);
+      });
+    }
+
 
 
     $(function () {
 
-      $('.mapBox').click(() => {
-        if ($('.mapBox').css('backgroundSize') === '150%') {
-          $('.mapBox').animate(mapLocation.init);
-        } else {
-          $('.mapBox').animate(mapLocation.group3);
-        }
-      })
 
 
-      // $('.mapBox').mouseenter((e) => {
 
-      //   // 淡出路径
-      //   $('#mapPath').animate({
-      //     opacity: 1,
-      //     top: "116px"
-      //   }, 'slow', () => {
-      //     $('#localMark').animate({
-      //       opacity: 1,
-      //       top: "183px"
-      //     }, () => {
-      //       $(this).unbind(e);
-      //       $(this).click(showMapNode);
-      //     })
-      //   });
-      //   // $('#mapPath').fadeIn(()=>{
-      //   //   $('#localMark').fadeIn()
-      //   // })
+      $('.mapBox').mouseenter((e) => {
+        // 淡出路径
+        $('#mapPath').animate({
+          opacity: 1,
+          top: "116px"
+        }, 'slow', () => {
+          $('#localMark').animate({
+            opacity: 1,
+            top: "183px"
+          }, () => {
+            $(this).unbind(e);
+            $(this).click(showMapNode);
+          })
+        });
 
-
-      // });
+      });
 
 
     })

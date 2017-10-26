@@ -1,0 +1,22 @@
+{
+  "name": "gzdashboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "browser-sync start --server --files \"css/*.css, *.html\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kenshinhu/GZdashboard.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kenshinhu/GZdashboard/issues"
+  },
+  "homepage": "https://github.com/Kenshinhu/GZdashboard#readme",
+  "devDependencies": {
+    "browser-sync": "^2.18.13"
+  }
+}

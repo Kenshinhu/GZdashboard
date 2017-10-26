@@ -2,6 +2,7 @@
 <html class="fullHtml">
 
 <head>
+
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta charset="utf-8">
   <title></title>
@@ -9,6 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/animate.css">
   <!--[if lt IE 9]>
 	<script src="js/html5shiv.min.js"></script>
 	<script src="js/respond.min.js"></script>
@@ -69,7 +71,7 @@
               <i></i>
             </a>
           </li>
-          <li >
+          <li>
             <a href="">
               <img src="images/side-menu2.png" alt="" class="icon1">
               <img src="images/side-menu2-on.png" alt="" class="icon2">
@@ -103,8 +105,17 @@
       <!-- 右侧 -->
       <div class="manager-right">
 
-        <div class="page2">
-          <a href="list.html"><img src="images/img21.png" alt=""></a>
+        <div class="mapBox">
+          <div id="mapPath">
+            <img src="./js/map_path.svg" alt="">
+          </div>
+          <div id="localMark">
+            <img src="./js/map_ico.svg" alt="">
+          </div>
+
+          <div id="mapNode">
+            <img src="./js/map_node.svg" alt="">
+          </div>
         </div>
 
 
@@ -119,6 +130,138 @@
   <script src="js/jquery.min.js"></script>
   <script src="js/jquery.nicescroll.min.js"></script>
   <script src="js/main.js"></script>
+  <style>
+    .mapBox {
+      margin-left: auto;
+      margin-right: auto;
+      width: 1280px;
+      height: 800px;
+      position: relative;
+      background-repeat: no-repeat;
+      background-image: url(/images/bg.png);
+      background-size: 100%;
+
+      background-color: #000;
+    }
+
+    #mapNode {
+      display: none;
+      background-color: rgba(0, 0, 0, 0.5);
+      /* position: fixed; */
+      width: 100%;
+      height: 100%
+    }
+
+    #mapNode img {
+      opacity: 0.0;
+      left: 222px;
+      top: 62px;
+      position: relative;
+    }
+
+
+    #mapPath {
+      opacity: 0.0;
+      position: absolute;
+      top: 126px;
+      left: 362px;
+    }
+
+    #localMark {
+      opacity: 0.0;
+      position: absolute;
+      top: 193px;
+      left: 292px;
+    }
+
+
+
+
+    @keyframes run {
+      90% {
+        /* background-size: '' */
+        transform: skew(-10deg);
+      }
+
+      100% {
+        transform: skew(0deg);
+      }
+    }
+
+  </style>
+  <script>
+    const showMapNode = (e) => {
+      $('#mapPath').fadeOut();
+      $('#localMark').fadeOut();
+      $('#mapNode').fadeIn((e) => {
+        $('#mapNode img').animate({
+          opacity: 1.0,
+          left: '222px',
+        });
+
+        $('#mapNode').click(() => {
+          $('#mapNode img').fadeOut(() => {
+            // $('.mapBox').animate({
+            //   backgroundSize:'150%'
+            // })
+          });
+        })
+      });
+    }
+
+    // 定位信息
+    const mapLocation = {
+      init: {
+        backgroundSize: '100%',
+        backgroundPositionX: '0px',
+        backgroundPositionY: '0px'
+      },
+      group3: {
+        backgroundSize: '150%',
+        backgroundPositionX: '-630px',
+        backgroundPositionY: '-402px'
+      }
+    }
+
+
+    $(function () {
+
+      $('.mapBox').click(() => {
+        if ($('.mapBox').css('backgroundSize') === '150%') {
+          $('.mapBox').animate(mapLocation.init);
+        } else {
+          $('.mapBox').animate(mapLocation.group3);
+        }
+      })
+
+
+      // $('.mapBox').mouseenter((e) => {
+
+      //   // 淡出路径
+      //   $('#mapPath').animate({
+      //     opacity: 1,
+      //     top: "116px"
+      //   }, 'slow', () => {
+      //     $('#localMark').animate({
+      //       opacity: 1,
+      //       top: "183px"
+      //     }, () => {
+      //       $(this).unbind(e);
+      //       $(this).click(showMapNode);
+      //     })
+      //   });
+      //   // $('#mapPath').fadeIn(()=>{
+      //   //   $('#localMark').fadeIn()
+      //   // })
+
+
+      // });
+
+
+    })
+
+  </script>
+
 </body>
 
 </html>
